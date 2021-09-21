@@ -3,14 +3,19 @@
 import typing as t
 from flask import Blueprint
 
+from ..response import *
+
 
 rate_blueprint = Blueprint("rate", __name__)
 
 
 @rate_blueprint.get("/currency")
-def get_currency() -> t.Tuple[t.Dict[str, t.Any], int]:
+def get_currency() -> APIResponse:
     """
     Get currency
+
+    Returns:
+        APIResponse: Currency rates
     """
 
-    return {"message": "ok"}, 200
+    return APIResponse(SUCCESS) >> {}

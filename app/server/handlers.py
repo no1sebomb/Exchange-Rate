@@ -1,15 +1,16 @@
 # coding=utf-8
 
-import typing as t
 from flask import Blueprint
 from werkzeug.exceptions import InternalServerError, HTTPException
+
+from .response import APIResponse, Status, INTERNAL_SERVER_ERROR
 
 
 handlers_blueprint = Blueprint("handlers", __name__)
 
 
 @handlers_blueprint.app_errorhandler(500)
-def handle_internal_error(error: InternalServerError) -> t.Tuple[t.Dict[str, t.Any], int]:
+def handle_internal_error(error: InternalServerError) -> APIResponse:
     """
     Handle 500 Internal Server Error
 
@@ -17,14 +18,14 @@ def handle_internal_error(error: InternalServerError) -> t.Tuple[t.Dict[str, t.A
         error (InternalServerError): Occurred error
 
     Returns:
-        t.Tuple[t.Dict[str, t.Any], int]: Template response for 500 Internal Server Error
+        APIResponse: Template response for 500 Internal Server Error
     """
 
-    return {"message": "internal_server_error"}, 500
+    return APIResponse(INTERNAL_SERVER_ERROR)
 
 
 @handlers_blueprint.app_errorhandler(HTTPException)
-def handle_any(error: HTTPException) -> t.Tuple[t.Dict[str, t.Any], int]:
+def handle_any(error: HTTPException) -> APIResponse:
     """
     Handle any HTTP exception
 
@@ -32,7 +33,7 @@ def handle_any(error: HTTPException) -> t.Tuple[t.Dict[str, t.Any], int]:
         error (HTTPException): Occurred error
 
     Returns:
-         t.Tuple[t.Dict[str, t.Any], int]: Template response for exception
+         APIResponse: Template response for exception
     """
 
-    return {"message": error.name.lower().replace(" ", "_")}, error.code or 500
+    return APIResponse(Status(error.code or 500, error.name.lower().replace(" ", "_")))
