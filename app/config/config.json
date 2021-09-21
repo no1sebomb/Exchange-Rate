@@ -1,4 +1,8 @@
 {
+  "server": {
+    "api_prefix": "/api"
+  },
+
   "database": {
     "engine_options": {
       "connect_args": {

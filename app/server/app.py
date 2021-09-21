@@ -1,6 +1,10 @@
 # coding=utf-8
 
-from flask import Flask
+from .server import RateAPIServer
+from .routes import rate_blueprint
 
 
-app = Flask(__name__)
+app = RateAPIServer(__name__)
+
+# Register API blueprints
+app.register_blueprint(rate_blueprint)

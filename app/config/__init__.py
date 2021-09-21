@@ -16,7 +16,7 @@ def load_json(filename: str, dirpath: Path = Path(__file__).resolve().parent) ->
         t.Dict[str, t.Any]: Loaded JSON data
     """
 
-    with (dirpath / "{}.json".format(filename)).open("rt", encoding="utf-8") as jsonFile:
+    with (dirpath / "{}".format(filename)).open("rt", encoding="utf-8") as jsonFile:
         return json.load(jsonFile)
 
 
