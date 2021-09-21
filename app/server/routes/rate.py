@@ -13,4 +13,4 @@ def get_currency() -> t.Tuple[t.Dict[str, t.Any], int]:
     Get currency
     """
 
-    return {}, 200
+    return {"message": "ok"}, 200
