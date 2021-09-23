@@ -8,15 +8,15 @@ from app.config import CONFIG
 
 
 def get_exchange_rates(
-        currencies: t.Iterable[str],
+        codes: t.Iterable[str],
         base: str = "USD",
         date: t.Optional[datetime.date] = None
-) -> t.Generator[float, None, None]:
+) -> t.Generator[t.Tuple[str, float], None, None]:
     """
     Get exchange rate for specified currencies (and date) to base currency
 
     Args:
-        currencies (t.Iterable[str]): Currency codes (3-letter)
+        codes (t.Iterable[str]): Currency codes (3-letter)
         base (str): Base currency code (3-letter)
         date (t.Optional[datetime.date]): Requested date.
             If no date is specified, returns latest exchange rate
@@ -38,7 +38,7 @@ def get_exchange_rates(
         rate_request_link = (
             f'https://openexchangerates.org/api/latest.json?'
             f'app_id={CONFIG["exchange_rate_api"]["app_id"]}&'
-            f'symbols={",".join(currencies)}&'
+            f'symbols={",".join(codes)}&'
             f'currency={base}'
         )
 
@@ -48,7 +48,7 @@ def get_exchange_rates(
             f'https://openexchangerates.org/api/historical/'
             f'{date.strftime("%Y-%m-%d")}.json?'
             f'app_id={CONFIG["exchange_rate_api"]["app_id"]}&'
-            f'symbols={",".join(currencies)}&'
+            f'symbols={",".join(codes)}&'
             f'currency={base}'
         )
 
@@ -69,6 +69,6 @@ def get_exchange_rates(
         # Success
         rates: t.Dict[str, float] = rate_request.json().get("rates", {})
 
-        for currency in currencies:
+        for currency in codes:
             # Yield rate for specified currencies
-            yield rates[currency]
+            yield currency, rates[currency]

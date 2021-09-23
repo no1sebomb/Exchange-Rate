@@ -91,9 +91,12 @@ class APIResponse(PageResponse):
 SUCCESS:               Status = Status(200, "success")
 BAD_REQUEST:           Status = Status(400, "bad_request")
 INTERNAL_SERVER_ERROR: Status = Status(500, "internal_server_error")
+SERVICE_UNAVAILABLE:   Status = Status(503, "service_unavailable")
 
 
 __all__ = (
     "Status", "APIResponse",
-    "SUCCESS", "BAD_REQUEST", "INTERNAL_SERVER_ERROR"
+    "SUCCESS", "BAD_REQUEST",
+    "INTERNAL_SERVER_ERROR",
+    "SERVICE_UNAVAILABLE"
 )
