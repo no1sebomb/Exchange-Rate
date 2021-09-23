@@ -9,5 +9,17 @@
         "connect_timeout": 8
       }
     }
+  },
+
+  "exchange_rate_api": {
+    "app_id": "35663b0d287d494dae65c25e1dc0eea2",
+
+    "request_options": {
+      "timeout": 4,
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:92.0) Gecko/20100101 Firefox/92.0",
+        "Connection": "keep-alive"
+      }
+    }
   }
 }

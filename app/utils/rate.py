@@ -1,0 +1,74 @@
+# coding=utf-8
+
+import datetime
+import requests
+import typing as t
+
+from app.config import CONFIG
+
+
+def get_exchange_rates(
+        currencies: t.Iterable[str],
+        base: str = "USD",
+        date: t.Optional[datetime.date] = None
+) -> t.Generator[float, None, None]:
+    """
+    Get exchange rate for specified currencies (and date) to base currency
+
+    Args:
+        currencies (t.Iterable[str]): Currency codes (3-letter)
+        base (str): Base currency code (3-letter)
+        date (t.Optional[datetime.date]): Requested date.
+            If no date is specified, returns latest exchange rate
+
+    Yields:
+        float: Currency rate
+
+    Raises:
+        KeyError: Some of specified currency codes are invalid
+        requests.exceptions.RequestException: Request failed
+
+    Notes:
+        Changing the API `base` currency is available for
+        Developer, Enterprise and Unlimited plan clients
+    """
+
+    if date is None:
+        # Latest rate
+        rate_request_link = (
+            f'https://openexchangerates.org/api/latest.json?'
+            f'app_id={CONFIG["exchange_rate_api"]["app_id"]}&'
+            f'symbols={",".join(currencies)}&'
+            f'currency={base}'
+        )
+
+    else:
+        # Rate by date
+        rate_request_link = (
+            f'https://openexchangerates.org/api/historical/'
+            f'{date.strftime("%Y-%m-%d")}.json?'
+            f'app_id={CONFIG["exchange_rate_api"]["app_id"]}&'
+            f'symbols={",".join(currencies)}&'
+            f'currency={base}'
+        )
+
+    try:
+        rate_request = requests.get(
+            rate_request_link,
+            **CONFIG["exchange_rate_api"]["request_options"]
+        )
+
+        # Validate request status
+        assert rate_request.status_code == 200
+
+    except (requests.exceptions.RequestException, AssertionError):
+        # Request failed
+        raise requests.exceptions.RequestException("Exchange rate request is failed")
+
+    else:
+        # Success
+        rates: t.Dict[str, float] = rate_request.json().get("rates", {})
+
+        for currency in currencies:
+            # Yield rate for specified currencies
+            yield rates[currency]
