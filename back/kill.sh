@@ -1,1 +1,0 @@
-kill $(cat /tmp/exc_app.pid)
