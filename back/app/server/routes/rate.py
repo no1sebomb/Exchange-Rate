@@ -1,25 +1,24 @@
 # coding=utf-8
 
 import typing as t
-from flask import Blueprint, request
+from flask import request
 from requests.exceptions import RequestException
 from marshmallow.exceptions import ValidationError
+from flask_smorest import Blueprint
 
 from ..response import *
 from .schemas import GetCurrency
 from app.utils import get_exchange_rates
 
 
-rate_blueprint = Blueprint("rate", __name__)
+rate_blueprint = Blueprint("rate", "rate", description="Currency rate operations")
 
 
 @rate_blueprint.get("/currency")
+@rate_blueprint.arguments(GetCurrency, location="query")
 def get_currency() -> APIResponse:
     """
-    Get currency
-
-    Returns:
-        APIResponse: Currency rates
+    Get exchange rate for specified currencies to USD
     """
 
     try:
