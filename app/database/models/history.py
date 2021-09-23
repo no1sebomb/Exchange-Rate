@@ -35,5 +35,5 @@ class History(database.Model):
 
     # Info
     value = Column(
-        pg.NUMERIC(10, 3),
+        pg.REAL
     )

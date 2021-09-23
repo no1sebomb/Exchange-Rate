@@ -35,7 +35,7 @@ class Currency(database.Model):
 
     # Info
     value = Column(
-        pg.NUMERIC(10, 3)
+        pg.REAL
     )
     updated_at = Column(
         pg.TIMESTAMP
