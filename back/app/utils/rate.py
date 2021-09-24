@@ -26,12 +26,22 @@ def get_exchange_rates(
         float: Currency rate
 
     Raises:
+        ValueError: If specified date is unavailable
         requests.exceptions.RequestException: Request failed
 
     Notes:
         Changing the API `base` currency is available for
         Developer, Enterprise and Unlimited plan clients
     """
+
+    def _check_date() -> None:
+        """
+        Check if date is available
+        """
+
+        if not datetime.datetime(year=1999, day=1, month=1) <= date <= datetime.datetime.utcnow():
+            # Invalid date
+            raise ValueError(f"Specified date '{date.strftime('%Y-%m-%d')}' is not available")
 
     if date is None:
         # Latest rate
@@ -44,6 +54,8 @@ def get_exchange_rates(
 
     else:
         # Rate by date
+        _check_date()
+
         rate_request_link = (
             f'https://openexchangerates.org/api/historical/'
             f'{date.strftime("%Y-%m-%d")}.json?'

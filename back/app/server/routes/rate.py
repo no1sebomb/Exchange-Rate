@@ -40,7 +40,7 @@ def get_currency() -> APIResponse:
 
         else:
             # Set current
-            query["date"] = datetime.datetime.now()
+            query["date"] = datetime.datetime.utcnow()
 
     except ValidationError:
         # Invalid args
@@ -106,6 +106,10 @@ def get_currency() -> APIResponse:
         except RequestException:
             # Request failed
             return APIResponse(SERVICE_UNAVAILABLE)
+
+        except ValueError:
+            # Date not available
+            return APIResponse(DATE_NOT_AVAILABLE)
 
         else:
             # Save changes
