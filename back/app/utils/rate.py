@@ -25,7 +25,6 @@ def get_exchange_rates(
         float: Currency rate
 
     Raises:
-        KeyError: Some of specified currency codes are invalid
         requests.exceptions.RequestException: Request failed
 
     Notes:
@@ -70,5 +69,6 @@ def get_exchange_rates(
         rates: t.Dict[str, float] = rate_request.json().get("rates", {})
 
         for currency in codes:
-            # Yield rate for specified currencies
-            yield currency, rates[currency]
+            # Yield rate for specified currencies (if exists)
+            if currency in rates:
+                yield currency, rates[currency]

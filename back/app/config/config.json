@@ -21,7 +21,7 @@
     "port": 5432,
     "username": "postgres",
     "password": "postgres",
-    "schema": "currency",
+    "database": "currency",
 
     "engine_options": {
       "connect_args": {
@@ -40,5 +40,13 @@
         "Connection": "keep-alive"
       }
     }
-  }
+  },
+
+  "saved_currencies": [
+    "UAH",
+    "RUB",
+    "PLN",
+    "EUR",
+    "CAD"
+  ]
 }
