@@ -9,23 +9,33 @@ from .handlers import handlers_blueprint
 from app.config import CONFIG
 
 
-app = RateAPIServer(__name__)
+def create_app() -> RateAPIServer:
+    """
+    Creates RateAPI app and initializes database & routes
 
-# Configurate app
-app.config.update(CONFIG["server"]["config"])
+    Returns:
+        UdexServer: Initialized UdexServer app
+    """
 
-# Database connection
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{0}:{1}@{2}:{3}/{4}".format(
-    CONFIG["database"]["username"],
-    CONFIG["database"]["password"],
-    CONFIG["database"]["host"],
-    CONFIG["database"]["port"],
-    CONFIG["database"]["schema"]
-)
+    app = RateAPIServer(__name__)
 
-# Instantiate API docs object
-api = Api(app)
+    # Configurate app
+    app.config.update(CONFIG["server"]["config"])
 
-# Register API blueprints
-app.register_blueprint(handlers_blueprint)
-api.register_blueprint(rate_blueprint)
+    # Database connection
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{0}:{1}@{2}:{3}/{4}".format(
+        CONFIG["database"]["username"],
+        CONFIG["database"]["password"],
+        CONFIG["database"]["host"],
+        CONFIG["database"]["port"],
+        CONFIG["database"]["database"]
+    )
+
+    # Instantiate API docs object
+    api = Api(app)
+
+    # Register API blueprints
+    app.register_blueprint(handlers_blueprint)
+    api.register_blueprint(rate_blueprint)
+
+    return app

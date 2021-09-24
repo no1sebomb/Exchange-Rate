@@ -1,3 +1,3 @@
 # coding=utf-8
 
-from .db import database, migrate
+from .db import database
