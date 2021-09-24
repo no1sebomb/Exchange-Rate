@@ -14,7 +14,6 @@ class History(database.Model):
 
     # Meta
     __tablename__ = "history"
-    __table_args__ = {},
 
     # ID
     currency_id = Column(

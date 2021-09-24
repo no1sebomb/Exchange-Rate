@@ -33,7 +33,7 @@ jobs:
         run: python3 -m pip install mypy flake8
       -
         name: Run Mypy static type checker
-        run: mypy back/app
+        run: mypy --show-error-codes --ignore-missing-imports back/app
       -
         name: Lint the code with Flake8
         run: |

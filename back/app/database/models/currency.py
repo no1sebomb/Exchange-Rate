@@ -14,7 +14,6 @@ class Currency(database.Model):
 
     # Meta
     __tablename__ = "currency"
-    __table_args__ = {},
 
     # ID
     id = Column(
