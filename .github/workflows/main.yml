@@ -29,6 +29,9 @@ jobs:
         name: Install dependencies
         run: pipenv install
       -
+        name: Install flake8 code linter
+        run: python3 -m pip install flake8
+      -
         name: Lint the code with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
