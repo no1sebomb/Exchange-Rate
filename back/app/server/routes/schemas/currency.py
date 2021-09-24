@@ -15,5 +15,6 @@ class GetCurrency(Schema):
         validate=validate.Length(min=1),
         required=True
     )
+    base = fields.Str(validate=validate.Length(min=1, max=3))
     date = fields.Date(format="%Y-%m-%d")
     cached = fields.Bool(missing=True)

@@ -46,25 +46,30 @@ def get_currency() -> APIResponse:
         # Invalid args
         return APIResponse(BAD_REQUEST)
 
+    else:
+        # Define caching options
+        _def_base = query.get("base") in (None, CONFIG["currency"]["base"])
+        _use_cached = query["cached"] and _def_base
+
     # Define results
     results: t.Dict[str, float] = {}
 
     # Split saved & non-saved currencies
-    saved_currencies: t.List[str] = [
+    cached_currencies: t.List[str] = [
         code.upper() for code in query["codes"] if (
-                code in CONFIG["saved_currencies"] and query["cached"]
+                code in CONFIG["currency"]["cached"] and _use_cached
         )
     ]
     requested_currencies: t.List[str] = [
         code.upper() for code in query["codes"] if (
-                code not in saved_currencies
+                code not in cached_currencies
         )
     ]
 
-    if saved_currencies:
+    if cached_currencies:
         # Select currency rates for specified date (or today)
         currency_query: BaseQuery = History.query.filter(
-            History.code.in_(saved_currencies),
+            History.code.in_(cached_currencies),
             func.date(History.date) == query["date"].date()
         )
 
@@ -75,7 +80,7 @@ def get_currency() -> APIResponse:
 
         # Add unavailable currencies to request list
         requested_currencies += [
-            currency for currency in saved_currencies if currency not in results
+            currency for currency in cached_currencies if currency not in results
         ]
 
     if requested_currencies:
@@ -88,7 +93,7 @@ def get_currency() -> APIResponse:
                 # Save result
                 results[currency_code] = rate
 
-                if currency_code in CONFIG["saved_currencies"]:
+                if currency_code in CONFIG["currency"]["cached"] and _def_base:
                     # Save new value to database
                     database.session.add(
                         History(

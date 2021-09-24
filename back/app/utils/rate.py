@@ -9,7 +9,7 @@ from app.config import CONFIG
 
 def get_exchange_rates(
         codes: t.Iterable[str],
-        base: str = "USD",
+        base: str = CONFIG["currency"]["base"],
         date: t.Optional[datetime.date] = None,
         **kwargs: t.Any
 ) -> t.Generator[t.Tuple[str, float], None, None]:

@@ -42,11 +42,15 @@
     }
   },
 
-  "saved_currencies": [
-    "UAH",
-    "RUB",
-    "PLN",
-    "EUR",
-    "CAD"
-  ]
+  "currency": {
+    "base": "USD",
+
+    "cached": [
+      "UAH",
+      "RUB",
+      "PLN",
+      "EUR",
+      "CAD"
+    ]
+  }
 }
