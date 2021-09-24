@@ -35,9 +35,9 @@ jobs:
         name: Run Mypy static type checker
         run: |
           # install package types
-          yes | mypy --install-types back/app
+          # yes | mypy --install-types back/app
           # check code (without imports)
-          mypy --show-error-codes --ignore-missing-imports back/app
+          # mypy --show-error-codes --ignore-missing-imports back/app
       -
         name: Lint the code with Flake8
         run: |
