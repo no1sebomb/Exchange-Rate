@@ -48,14 +48,17 @@ def get_currency() -> APIResponse:
 
     # Define results
     results: t.Dict[str, float] = {}
-    _currency_ids: t.Dict[str, int] = {}
 
     # Split saved & non-saved currencies
     saved_currencies: t.List[str] = [
-        code.upper() for code in query["codes"] if code in CONFIG["saved_currencies"]
+        code.upper() for code in query["codes"] if (
+                code in CONFIG["saved_currencies"] and query["cached"]
+        )
     ]
     requested_currencies: t.List[str] = [
-        code.upper() for code in query["codes"] if code not in saved_currencies
+        code.upper() for code in query["codes"] if (
+                code not in saved_currencies
+        )
     ]
 
     if saved_currencies:
@@ -85,7 +88,7 @@ def get_currency() -> APIResponse:
                 # Save result
                 results[currency_code] = rate
 
-                if currency_code in saved_currencies:
+                if currency_code in CONFIG["saved_currencies"]:
                     # Save new value to database
                     database.session.add(
                         History(

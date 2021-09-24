@@ -10,7 +10,8 @@ from app.config import CONFIG
 def get_exchange_rates(
         codes: t.Iterable[str],
         base: str = "USD",
-        date: t.Optional[datetime.date] = None
+        date: t.Optional[datetime.date] = None,
+        **kwargs: t.Any
 ) -> t.Generator[t.Tuple[str, float], None, None]:
     """
     Get exchange rate for specified currencies (and date) to base currency

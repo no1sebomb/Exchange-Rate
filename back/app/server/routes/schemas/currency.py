@@ -16,3 +16,4 @@ class GetCurrency(Schema):
         required=True
     )
     date = fields.Date(format="%Y-%m-%d")
+    cached = fields.Bool(missing=True)
