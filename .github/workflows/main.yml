@@ -29,10 +29,13 @@ jobs:
         name: Install dependencies
         run: pipenv install
       -
-        name: Install flake8 code linter
-        run: python3 -m pip install flake8
+        name: Install Mypy and Flake8
+        run: python3 -m pip install mypy flake8
       -
-        name: Lint the code with flake8
+        name: Run Mypy static type checker
+        run: mypy back/app
+      -
+        name: Lint the code with Flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
