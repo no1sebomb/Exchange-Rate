@@ -7,20 +7,19 @@ getting the current exchange rate of specified currency
 
 ## Installation & Running
 
-##### Debian/Ubuntu:
+### Debian/Ubuntu:
 
 1. Install Docker:
    ```shell
    sudo snap install docker
    ```
 
-2. Go to _/back_ and build docker image:
+2. Build docker-compose
    ```shell
-   cd back
-   docker build -t exc_app .
+   docker-compose build
    ```
 
-3. Run docker image:
+3. Run docker-compose:
    ```shell
-   docker run --network="host" exc_app
+   docker-compose up
    ```
