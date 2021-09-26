@@ -14,17 +14,17 @@ COPY . .
 # Install dependencies
 RUN pipenv install --deploy --system --ignore-pipfile
 
-# Expose server port
-EXPOSE 5000
-
 # Install crontab updater dependencies
 RUN apt-get update
 RUN apt-get install cron -y
 RUN apt-get install curl -y
 
 # Run updater
+RUN chmod +x ./entrypoint.sh
 RUN chmod +x ./app/utils/update.sh
-RUN ./app/utils/update.sh
+
+# Expose server port
+EXPOSE 5000
 
 # Run WSGI
-CMD ["gunicorn", "wsgi:app", "-c", "gunicorn.py"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
