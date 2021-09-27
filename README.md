@@ -23,3 +23,7 @@ getting the current exchange rate of specified currency
    ```shell
    docker-compose up
    ```
+
+## Usage Guide
+
+__Swagger UI__ documenation available at `http://0.0.0.0:5000/api/swagger-ui`

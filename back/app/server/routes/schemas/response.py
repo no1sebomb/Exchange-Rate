@@ -4,7 +4,10 @@ import typing as t
 from marshmallow import Schema, fields
 
 
-class ResponseSchema(Schema):
+S = t.TypeVar("S", bound=Schema)
+
+
+class ResponseSchema(Schema, t.Generic[S]):
     """
     Response object schema
     """
@@ -12,12 +15,12 @@ class ResponseSchema(Schema):
     message = fields.Str()
     response = fields.Dict()
 
-    def __class_getitem__(cls, response: t.Type[Schema]) -> t.Type:
+    def __class_getitem__(cls, response: t.Type[S]) -> t.Type:
         """
         Get response schema for specified response schema
 
         Args:
-            response (Schema): Response schema
+            response (S): Response schema
 
         Returns:
             t.Type[ResponseSchema]: ResponseSchema with specified response
