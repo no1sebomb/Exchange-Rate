@@ -11,10 +11,10 @@ from marshmallow.exceptions import ValidationError
 
 from ..response import *
 from .schemas import GetCurrency
-from app.config import CONFIG
-from app.utils import get_exchange_rates
-from app.database import database
-from app.database.models import History
+from ...config import CONFIG
+from ...utils import get_exchange_rates
+from ...database import database
+from ...database.models import History
 
 
 rate_blueprint = Blueprint("rate", "rate", description="Currency rate operations")

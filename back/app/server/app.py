@@ -6,7 +6,7 @@ from .server import RateAPIServer
 from .routes import rate_blueprint
 from .handlers import handlers_blueprint
 
-from app.config import CONFIG
+from ..config import CONFIG
 
 
 def create_app() -> RateAPIServer:

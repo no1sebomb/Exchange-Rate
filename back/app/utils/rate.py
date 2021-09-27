@@ -4,7 +4,7 @@ import datetime
 import requests
 import typing as t
 
-from app.config import CONFIG
+from ..config import CONFIG
 
 
 def get_exchange_rates(
@@ -39,7 +39,7 @@ def get_exchange_rates(
         Check if date is available
         """
 
-        if not datetime.datetime(year=1999, day=1, month=1) <= _date <= datetime.datetime.utcnow():
+        if not datetime.date(year=1999, day=1, month=1) <= _date <= datetime.datetime.utcnow().date():
             # Invalid date
             raise ValueError(f"Specified date '{_date.strftime('%Y-%m-%d')}' is not available")
 

@@ -3,7 +3,7 @@
 import typing as t
 from flask import Flask
 
-from app.config import CONFIG
+from ..config import CONFIG
 
 
 if t.TYPE_CHECKING:
