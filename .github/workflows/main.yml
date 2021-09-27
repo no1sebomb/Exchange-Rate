@@ -27,7 +27,8 @@ jobs:
         run: python3 -m pip install pipenv
       -
         name: Install dependencies
-        run: pipenv install
+        working-directory: ./back
+        run: pipenv install --deploy --system --ignore-pipfile
       -
         name: Install Mypy and Flake8
         run: python3 -m pip install mypy flake8
