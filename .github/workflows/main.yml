@@ -47,4 +47,5 @@ jobs:
       -
         name: Test with unittest
         run: |
-          python3 -m unittest discover
+          # run tests from app directory with detailed output
+          python3 -m unittest discover -s ./back/app/tests -t . -v
