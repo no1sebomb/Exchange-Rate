@@ -18,3 +18,14 @@ class GetCurrency(Schema):
     base = fields.Str(validate=validate.Length(min=1, max=3))
     date = fields.Date(format="%Y-%m-%d")
     cached = fields.Bool(missing=True)
+
+
+class CurrencyResponse(Schema):
+    """
+    Currency response schema (used for OpenAPI response definition)
+    """
+
+    currency_code1 = fields.Float()
+    currency_code2 = fields.Float()
+    ...
+    currency_codeN = fields.Float()

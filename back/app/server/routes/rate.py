@@ -10,7 +10,7 @@ from requests.exceptions import RequestException
 from marshmallow.exceptions import ValidationError
 
 from ..response import *
-from .schemas import GetCurrency
+from .schemas import *
 from ...config import CONFIG
 from ...utils import get_exchange_rates
 from ...database import database
@@ -22,6 +22,14 @@ rate_blueprint = Blueprint("rate", "rate", description="Currency rate operations
 
 @rate_blueprint.get("/currency")
 # @rate_blueprint.arguments(GetCurrency, location="query")
+@rate_blueprint.response(200, ResponseSchema[CurrencyResponse],
+                         description="Success request")
+@rate_blueprint.response(400, ResponseSchema,
+                         description="Bad request (invalid args)")
+@rate_blueprint.response(500, ResponseSchema,
+                         description="Unexpected server error")
+@rate_blueprint.response(503, ResponseSchema,
+                         description="Service not available (could not perform rates request)")
 def get_currency() -> APIResponse:
     """
     Get exchange rate for specified currencies to USD
